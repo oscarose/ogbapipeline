@@ -1,39 +1,39 @@
 ---
 - name: Touch file
-    command: touch /usr/lib/systemd/system/tomcat.service
-    
-  - name: Write tomcat startupscript to /usr/lib/systemd/system/tomcat.service
-    command: cp {{ install_dir }}/tomcat /usr/lib/systemd/system/tomcat.service 
+  command: touch /usr/lib/systemd/system/tomcat.service
 
-  - name: Add to the tomcat-users.xml file
-    lineinfile:
-      dest={{ install_dir }}/{{ tomcat_version }}/conf/tomcat-users.xml
-      state=present
-      insertbefore=^</tomcat-users>
-      line='<user username="oscarose" password="oscarose" roles="tomcat,admin-gui,manager-gui,manager-script"/>'
+- name: Write tomcat startupscript to /usr/lib/systemd/system/tomcat.service
+  command: cp {{ install_dir }}/tomcat /usr/lib/systemd/system/tomcat.service
 
-  - name: Make sure tomcat runs on boot, and start the service
-    command: systemctl enable tomcat.service
-  
-  - name: Get Artifacts
-    get_url:
-      url: http://18.208.182.9:8081/artifactory/CD-MY-STAGE/{{ item }}
-      url_username: "{{ artifactory_user }}"
-      url_password: "{{ artifactory_password }}"
-      dest: "{{ jenkins_dir }}"
-      owner: "{{ app_user }}"
-      mode: 0755
-    with_items:
-     - jenkins.war
-    become: true
-    become_method: sudo
-    become_user: root
-    
-  - name: Chown all to tomcat
-    shell: /bin/chown -R "{{ app_user }}". "{{ install_dir }}"/*
-  
-  - name: start jenkins service
-    command: systemctl start tomcat.service
-    
+- name: Add to the tomcat-users.xml file
+  lineinfile:
+    dest={{ install_dir }}/{{ tomcat_version }}/conf/tomcat-users.xml
+    state=present
+    insertbefore=^</tomcat-users>
+    line='<user username="oscarose" password="oscarose" roles="tomcat,admin-gui,manager-gui,manager-script"/>'
+
+- name: Make sure tomcat runs on boot, and start the service
+  command: systemctl enable tomcat.service
+
+- name: Get Artifacts
+  get_url:
+    url: http://18.208.182.9:8081/artifactory/CD-MY-STAGE/{{ item }}
+    url_username: "{{ artifactory_user }}"
+    url_password: "{{ artifactory_password }}"
+    dest: "{{ jenkins_dir }}"
+    owner: "{{ app_user }}"
+    mode: 0755
+  with_items:
+   - jenkins.war
+  become: true
+  become_method: sudo
+  become_user: root
+
+- name: Chown all to tomcat
+  shell: /bin/chown -R "{{ app_user }}". "{{ install_dir }}"/*
+
+- name: start jenkins service
+  command: systemctl start tomcat.service
+
  # - name: clear /opt directory
   #  shell: /bin/rm -rf "{{ install_dir }}"/*

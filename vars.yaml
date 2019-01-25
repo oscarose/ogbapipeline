@@ -1,0 +1,6 @@
+---
+install_dir: /opt
+jenkins_dir: /opt/apache-tomcat-8.5.37/webapps
+java_name: jdk1.8.0_202
+tomcat_version: apache-tomcat-8.5.37
+app_user: tomcat

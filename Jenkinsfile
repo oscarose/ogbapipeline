@@ -20,6 +20,6 @@ node {
           sh 'ls -altr'
           sh 'ansible --version'
           sh 'which ansible'
-          sh 'ansible-playbook -i "${Server_IP}," -k -b --extra-vars "artifactory_user=${artifactory_user} artifactory_password=${artifactory_password} ansible_ssh_pass=${ssh_pwd} ansible_become_pass=${ssh_pwd} Server_IP=${Server_IP}" ${WORKSPACE}/deploy.yaml'
+          sh 'ansible-playbook -i "${Server_IP}," -k -b --extra-vars "artifactory_user=${artifactory_user} artifactory_password=${artifactory_password} ansible_ssh_user=abraham ansible_ssh_pass=${ssh_pwd} ansible_become_pass=${ssh_pwd} Server_IP=${Server_IP}" ${WORKSPACE}/deploy.yaml'
      }
 }

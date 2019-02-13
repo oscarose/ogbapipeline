@@ -1,7 +1,7 @@
 node {     
      stage('checkout scm') {
          git url: 'https://github.com/oscarose/ogbapipeline.git'
-         //credentialsId: 'Github'
+             credentialsId: 'Github'
      }
      parameters {
         string(name: 'install_dir', defaultValue: '/opt', description: 'Tomcat dir')

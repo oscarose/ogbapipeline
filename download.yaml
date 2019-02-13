@@ -2,8 +2,8 @@
 - name: Get Artifacts
   get_url:
     url: http://18.208.182.9:8081/artifactory/CD-MY-STAGE/{{ item }}
-    url_username: "{{ artifactory_user }}"
-    url_password: "{{ artifactory_password }}"
+    #url_username: "{{ artifactory_user }}"
+    #url_password: "{{ artifactory_password }}"
     dest: "{{ install_dir }}"
     owner: "{{ app_user }}"
     mode: 0755
